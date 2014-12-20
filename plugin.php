@@ -1,22 +1,15 @@
 <?php
 /*
 	Plugin Name: Genesis Simple Hero Image
-	Plugin URI:
+	Plugin URI: https://wordpress.org/plugins/genesis-simple-hero-image/
 	Description: Adds a hero image to the top of your site using the Genesis Framework.
 	Author: Josh Medeski
 	Author URI: http://joshmedeski.com/
 
-	Version: 1.0
+	Version: 1.0.1
 
 	License: GNU General Public License v2.0 (or later)
 	License URI: http://www.opensource.org/licenses/gpl-license.php
-*/
-
-/*
-	The main class that handles the entire output, customizer content, etc., for this plugin.
-
-	@package Genesis Simple Hero Image
-	@since 1.0
 */
 
   // Customizer Data
@@ -29,6 +22,7 @@
       'priority'    => 100
       ) );
 
+
     // Add Hero Image
     $wp_customize->add_setting( 'genesis_hero_image' );
 
@@ -38,6 +32,7 @@
       'section'     => 'genesis_hero_image_section',
       'settings'    => 'genesis_hero_image',
       ) ) );
+
 
     // Checkbox: Replace Hero Image with Featured Image
     $wp_customize->add_setting('genesis_hero_image_featured_image');
@@ -49,6 +44,7 @@
       'settings'    => 'genesis_hero_image_featured_image',
       'type'        => 'checkbox',
       ) );
+
 
     // Dropdown: Hero Image Position
     $wp_customize->add_setting(
@@ -71,8 +67,15 @@
         'beforec' => 'Before Content',
         )
       ) );
+
+
   };
+
   add_action( 'customize_register', 'genesis_simple_hero_image_customize' );
+
+
+
+
 
   // Hero Image Output
   function genesis_simple_hero_image_output() {
@@ -86,6 +89,11 @@
     else {}
   };
 
+
+
+
+
+// Hero Image Positioning
 $image_position = get_theme_mod( 'genesis_hero_image_position' );
 if( $image_position != '' ) {
   switch ( $image_position ) {
