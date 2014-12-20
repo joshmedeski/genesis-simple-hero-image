@@ -6,7 +6,7 @@
 	Author: Josh Medeski
 	Author URI: http://joshmedeski.com/
 
-	Version: 1.0.1
+	Version: 1.0.2
 
 	License: GNU General Public License v2.0 (or later)
 	License URI: http://www.opensource.org/licenses/gpl-license.php

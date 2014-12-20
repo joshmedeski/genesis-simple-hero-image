@@ -3,7 +3,7 @@ Contributors: joshmedeski
 Tags: genesis, genesiswp, studiopress, customizer
 Requires at least: 3.2
 Tested up to: 4.1
-Stable tag: 1.0.0
+Stable tag: 1.0.2
 
 This plugin adds a hero image to your Genesis theme.
 
