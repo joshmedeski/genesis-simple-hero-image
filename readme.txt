@@ -3,7 +3,7 @@ Contributors: joshmedeski
 Tags: genesis, genesiswp, studiopress, customizer
 Requires at least: 3.2
 Tested up to: 4.1
-Stable tag: 1.0.2
+Stable tag: 1.1.0
 
 This plugin adds a hero image to your Genesis theme.
 
@@ -39,6 +39,12 @@ There are multiple options for where to display the hero image: before the menus
 You must have Genesis (2.0) or a Genesis child theme installed and activated on your site.
 
 == Changelog ==
+
+= 1.1 =
+* Removed: image positioning options
+* Update: the hero image is now a background image using CSS
+* New option: image height
+* New feature: allow featured image to override hero image
 
 = 1.0 =
 * Initial Release
