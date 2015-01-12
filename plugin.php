@@ -6,13 +6,15 @@
 	Author: Josh Medeski
 	Author URI: http://joshmedeski.com/
 
-	Version: 1.0.2
+  Version: 1.1.0
 
-	License: GNU General Public License v2.0 (or later)
-	License URI: http://www.opensource.org/licenses/gpl-license.php
+  License: GNU General Public License v2.0 (or later)
+  License URI: http://www.opensource.org/licenses/gpl-license.php
 */
 
   // Customizer Data
+  add_action( 'customize_register', 'genesis_simple_hero_image_customize' );
+
   function genesis_simple_hero_image_customize( $wp_customize ) {
 
     // Define Customizer Section
@@ -33,11 +35,10 @@
       'settings'    => 'genesis_hero_image',
       ) ) );
 
-
     // Checkbox: Replace Hero Image with Featured Image
     $wp_customize->add_setting('genesis_hero_image_featured_image');
 
-    $wp_customize->add_control( 'hero_post_thumnail_control', array(
+    $wp_customize->add_control( 'genesis_hero_image_featured_image_control', array(
       'label'       => 'Use Featured Image',
       'description' => 'Replace the hero image with the featured image on pages that apply',
       'section'     => 'genesis_hero_image_section',
@@ -45,88 +46,50 @@
       'type'        => 'checkbox',
       ) );
 
-
-    // Dropdown: Hero Image Position
-    $wp_customize->add_setting(
-      'genesis_hero_image_position',
-      array (
-        'default' => 'above',
-        ) );
-
-    $wp_customize->add_control( 'hero_post_thumnail_control', array(
-      'label'       => __( 'Image Position', 'genesis' ),
-      'description' => 'Decide where the hero image is positioned',
-      'section'     => 'genesis_hero_image_section',
-      'settings'    => 'genesis_hero_image_position',
-      'type'        => 'select',
-      'choices'     => array(
-        'beforem' => 'Before Menus',
-        'afterm' => 'After Menus',
-        'betweenm' => 'Between Menus',
-        'beforeh' => 'Before Header',
-        'beforec' => 'Before Content',
-        )
+    // Checkbox: Replace Hero Image with Featured Image
+    $wp_customize->add_setting('genesis_hero_image_height', array(
+      'default'     => '300px',
       ) );
 
+    $wp_customize->add_control( 'genesis_hero_image_height_control', array(
+      'label'       => 'Height',
+      'description' => 'Define the hero image height (include px).',
+      'section'     => 'genesis_hero_image_section',
+      'settings'    => 'genesis_hero_image_height',
+      ) );
 
   };
 
-  add_action( 'customize_register', 'genesis_simple_hero_image_customize' );
-
-
-
-
-
   // Hero Image Output
+  add_action( 'genesis_after_header', 'genesis_simple_hero_image_output', 15 );
+
   function genesis_simple_hero_image_output() {
     if ( get_theme_mod( 'genesis_hero_image' ) ) {
-      echo "<img src=\"";
-      echo esc_url( get_theme_mod( 'genesis_hero_image' ) );
-      echo "\" alt=\"";
-      echo esc_attr( get_bloginfo( 'name', 'display' ) );
-      echo "\" class=\"hero-image\" style=\"vertical-align:middle\">";
+      echo "<div class=\"hero-image\">";
+
+      echo "</div>";
     }
     else {}
   };
 
+// Hero Image CSS
+add_action('wp_head','genesis_hero_image_css');
 
+function genesis_hero_image_css() {
 
+  $image    = esc_url( get_theme_mod( 'genesis_hero_image' ) );
+  $height   = esc_attr( get_theme_mod( 'genesis_hero_image_height' ) );
+  $featured = wp_get_attachment_url( get_post_thumbnail_id());
 
+  echo "<style> .hero-image {";
 
-// Hero Image Positioning
-$image_position = get_theme_mod( 'genesis_hero_image_position' );
-if( $image_position != '' ) {
-  switch ( $image_position ) {
+  echo "background-image: url($image);";
+  echo "background-size: cover;";
+  echo "min-height: $height;";
 
-    // Before Menus
-    case 'beforem' :
-    add_action( 'genesis_after_header', 'genesis_simple_hero_image_output' );
-    break;
-
-    // After Menus
-    case 'afterm' :
-    add_action( 'genesis_after_header', 'genesis_simple_hero_image_output', 15 );
-    break;
-
-    // Between Menus
-    case 'betweenm' :
-    remove_action( 'genesis_after_header', 'genesis_do_nav' );
-    add_action( 'genesis_after_header', 'genesis_do_nav' );
-
-    add_action( 'genesis_after_header', 'genesis_simple_hero_image_output' );
-
-    remove_action( 'genesis_after_header', 'genesis_do_subnav' );
-    add_action( 'genesis_after_header', 'genesis_do_subnav' );
-    break;
-
-    // Before Header
-    case 'beforeh' :
-    add_action( 'genesis_before_header', 'genesis_simple_hero_image_output');
-    break;
-
-    // Before Content
-    case 'beforec' :
-    add_action( 'genesis_before_content_sidebar_wrap', 'genesis_simple_hero_image_output' );
-    break;
+  if ( has_post_thumbnail() ) {
+    echo "background-image: url($featured);";
   }
+
+  echo "} </style>";
 }
