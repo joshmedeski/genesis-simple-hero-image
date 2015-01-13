@@ -5,7 +5,7 @@
 	Description: Adds a hero image to the top of your site using the Genesis Framework.
 	Author: Josh Medeski
 	Author URI: http://joshmedeski.com/
-  Version: 1.1.0
+  Version: 1.1.3
   License: GNU General Public License v2.0 (or later)
   License URI: http://www.opensource.org/licenses/gpl-license.php
 */
@@ -83,6 +83,7 @@ function genesis_hero_image_css() {
 
   echo "background-image: url($image);";
   echo "background-size: cover;";
+  echo "min-height: 300px;" // Default size
   echo "min-height: $height;";
 
   if ( has_post_thumbnail() ) {
