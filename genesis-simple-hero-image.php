@@ -5,7 +5,7 @@
 	Description: Adds a hero image to the top of your site using the Genesis Framework.
 	Author: Josh Medeski
 	Author URI: http://joshmedeski.com/
-  Version: 1.1.0
+  Version: 1.1.4
   License: GNU General Public License v2.0 (or later)
   License URI: http://www.opensource.org/licenses/gpl-license.php
 */
@@ -46,8 +46,8 @@
 
     // Checkbox: Replace Hero Image with Featured Image
     $wp_customize->add_setting('genesis_hero_image_height', array(
-      'default'     => '300px',
-      ) );
+      'default' => '300px';
+    ));
 
     $wp_customize->add_control( 'genesis_hero_image_height_control', array(
       'label'       => 'Height',
@@ -76,18 +76,27 @@ add_action('wp_head','genesis_hero_image_css');
 function genesis_hero_image_css() {
 
   $image    = esc_url( get_theme_mod( 'genesis_hero_image' ) );
-  $height   = esc_attr( get_theme_mod( 'genesis_hero_image_height' ) );
+  $height   = esc_attr( get_theme_mod( 'genesis_hero_image_height', '300px' ) );
   $featured = wp_get_attachment_url( get_post_thumbnail_id());
+  $position = "center center";
+  $repeat   = "no-repeat";
 
   echo "<style> .hero-image {";
 
-  echo "background-image: url($image);";
-  echo "background-size: cover;";
+  echo "background: url($image) $repeat $position;";
   echo "min-height: $height;";
+  echo "-webkit-background-size: cover;";
+  echo "-moz-background-size: cover;";
+  echo "-o-background-size: cover;";
+  echo "background-size: cover;";
 
-  if ( has_post_thumbnail() ) {
-    echo "background-image: url($featured);";
+  if ( get_theme_mod('genesis_hero_image_featured_image')) {
+    if ( has_post_thumbnail() && is_singular() ) {
+      echo "background-image: url($featured);";
+    }
+    else {}
   }
+  else {}
 
   echo "} </style>";
 }
