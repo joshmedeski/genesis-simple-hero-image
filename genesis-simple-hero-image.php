@@ -5,7 +5,7 @@
 	Description: Adds a hero image to the top of your site using the Genesis Framework.
 	Author: Josh Medeski
 	Author URI: http://joshmedeski.com/
-  Version: 1.1.4
+  Version: 1.1.5
   License: GNU General Public License v2.0 (or later)
   License URI: http://www.opensource.org/licenses/gpl-license.php
 */
@@ -46,7 +46,7 @@
 
     // Checkbox: Replace Hero Image with Featured Image
     $wp_customize->add_setting('genesis_hero_image_height', array(
-      'default' => '300px';
+      'default' => '300px'
     ));
 
     $wp_customize->add_control( 'genesis_hero_image_height_control', array(
